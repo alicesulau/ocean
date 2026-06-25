@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footprint — Alice Lau</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+<nav>
+  <a class="site-name" href="index.html">Alice Lau</a>
+  <ul>
+    <li><a href="index.html">About</a></li>
+    <li><a href="academic.html">Academic</a></li>
+    <li><a href="outreach.html">Outreach</a></li>
+    <li><a href="footprint.html" class="active">Footprint</a></li>
+    <li><a href="cv.html">CV</a></li>
+  </ul>
+</nav>
+<main>
+  <h1>Global Footprint</h1>
+  <p class="map-intro" style="color:var(--muted); margin-top:0.6rem;">Places where study, research, and conservation have taken me. Click a marker to explore.</p>
+  <div id="map"></div>
+</main>
+<footer>© Alice Lau. All rights reserved.</footer>
+
+<script>
+const map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([30, 20], 2);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap contributors © CARTO',
+  subdomains: 'abcd', maxZoom: 18
+}).addTo(map);
+
+const icon = L.divIcon({
+  className: '',
+  html: `<div style="width:12px;height:12px;border-radius:50%;background:#5A7472;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"></div>`,
+  iconSize: [12, 12], iconAnchor: [6, 6]
+});
+
+const places = [
+  {
+    coords: [22.3193, 114.1694],
+    name: "Hong Kong",
+    items: [
+      { tag: "Education", text: "BSc Biology, CUHK (2018–2023)" },
+      { tag: "Research", text: "Research Assistant, Coral Biology Lab, CUHK (2021 & 2024–2025)" },
+      { tag: "Research", text: "Intern, WWF-HK Ocean Conservation Team (2022)" },
+      { tag: "Conference", text: "APRU × EBPHK Biodiversity Conference — oral presentation (2024)" },
+      { tag: "Conference", text: "10th Int'l Conference on Marine Pollution & Ecotoxicology — poster (2024)" }
+    ]
+  },
+  {
+    coords: [6.9271, 79.8612],
+    name: "Colombo, Sri Lanka",
+    items: [
+      { tag: "Outreach", text: "AIESEC Coastal & Turtle Conservation Project (Jun–Aug 2019)" }
+    ]
+  },
+  {
+    coords: [62.6010, 29.7636],
+    name: "Joensuu, Finland",
+    items: [
+      { tag: "Education", text: "Semester Exchange — University of Eastern Finland (Jan–Jun 2021)" }
+    ]
+  },
+  {
+    coords: [38.6979, -9.4215],
+    name: "Cascais, Portugal",
+    items: [
+      { tag: "Engagement", text: "UN Ocean Conference — Youth & Innovation Forum, HK Representative & Innovathon Finalist (Jun 2022)" }
+    ]
+  },
+  {
+    coords: [48.3904, -4.4861],
+    name: "Brest, France",
+    items: [
+      { tag: "Scholarship", text: "French + Science Scholarship — Science & Technology of the Sea (Jun–Jul 2023)" }
+    ]
+  },
+  {
+    coords: [40.4168, -3.7038],
+    name: "Madrid, Spain",
+    items: [
+      { tag: "Education", text: "Erasmus Mundus MSc — Global Change Ecology & Biodiversity Management (2025–2027)" }
+    ]
+  },
+  {
+    coords: [53.2274, -4.1293],
+    name: "Bangor, Wales",
+    items: [
+      { tag: "Education", text: "Erasmus Mundus MSc — Global Change Ecology & Biodiversity Management (2025–2027)" }
+    ]
+  },
+  {
+    coords: [38.7169, -9.1399],
+    name: "Lisbon, Portugal",
+    items: [
+      { tag: "Education", text: "Erasmus Mundus MSc — Global Change Ecology & Biodiversity Management (2025–2027)" }
+    ]
+  },
+  {
+    coords: [19.3182, -98.2375],
+    name: "Tlaxcala, Mexico",
+    items: [
+      { tag: "Education", text: "Erasmus Mundus MSc — Global Change Ecology & Biodiversity Management (2025–2027)" }
+    ]
+  }
+];
+
+places.forEach(p => {
+  const itemsHtml = p.items.map(i =>
+    `<li><span class="popup-tag">${i.tag}</span>${i.text}</li>`
+  ).join('');
+  const popup = `<div class="popup-title">${p.name}</div><ul class="popup-items">${itemsHtml}</ul>`;
+  L.marker(p.coords, { icon }).addTo(map).bindPopup(popup, { maxWidth: 280 });
+});
+</script>
+</body>
+</html>
